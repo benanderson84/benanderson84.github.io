@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -114,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
                                 <div class="quarto-categories">
                 <div class="quarto-category">football</div>
                 <div class="quarto-category">draft</div>
-                <div class="quarto-category">position</div>
+                <div class="quarto-category">Nebraska</div>
               </div>
                   </div>
   </div>
@@ -151,6 +185,766 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p>As the 2025 NFL draft went along, many teams selected players that they hope can put their franchise on the best path to success.</p>
+<p>Whether that was the Tennessee Titans picking first overall after a dreadful 3-14 season, or the Philadelphia Eagles coming off a massive 40-22 victory over the Kansas City Chiefs in Super Bowl LIX, every team was looking for that missing piece that could put their team at the top of the league.</p>
+<p>Finally, at pick No.&nbsp;219 in the seventh round, the New York Giants selected tight end Thomas Fidone II out of Nebraska.</p>
+<p>Fidone, who was ranked as the No.&nbsp;One tight end in the 2021 recruiting class, suffered two ACL injuries at the beginning of his career and struggled to get on the field in his first two seasons. The Council Bluffs, Iowa native was the highest-rated recruit to sign with the Huskers since 2008.</p>
+<p>After playing every game in back-to-back seasons for the Big Red, Fidone put together 260 receiving yards in 2023 and 373 in 2024. After underperforming seasons in his college career, it begs the question, how successful are tight ends drafted in the seventh round in the NFL?</p>
+<p>Sports Reference provides receiving stats from every NFL season and it can be paired with draft data to represent the receiving stats of every player drafted in the NFL since 2010.</p>
+<p>Here is the number of receiving yards for every tight end by the round they were drafted in.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cfbfastR)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(waffle)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>picks15 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2015</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>picks16 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2016</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>picks17 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2017</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>picks18 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2018</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>picks19 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2019</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>picks20 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2020</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>picks21 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2021</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>picks22 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2022</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>picks23 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2023</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>picks24 <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="dv">2024</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>picks <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(picks15, picks16, picks17, picks18, picks19, picks20, picks21, picks22, picks23, picks24)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>picks <span class="sc">|&gt;</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">==</span> <span class="st">"Tight End"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 140 × 23
+   college_athlete_id nfl_athlete_id college_id college_team  college_conference
+                &lt;int&gt;          &lt;int&gt;      &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;             
+ 1             530747          46858        135 Minnesota     Big Ten           
+ 2             501147          46872       2390 Miami         ACC               
+ 3             518366          46885        164 Rutgers       Big Ten           
+ 4             514175          46913        194 Ohio State    Big Ten           
+ 5             501882          47000        201 Oklahoma      Big 12            
+ 6             499085          46938         79 Southern Ill… MVFC              
+ 7             511843          47234          2 Auburn        SEC               
+ 8             535598          47046        213 Penn State    Big Ten           
+ 9            2574591          46992         48 Delaware      CAA               
+10            2508079          47081       2287 Illinois Sta… MVFC              
+# ℹ 130 more rows
+# ℹ 18 more variables: nfl_team &lt;chr&gt;, year &lt;int&gt;, overall &lt;int&gt;, round &lt;int&gt;,
+#   pick &lt;int&gt;, name &lt;chr&gt;, position &lt;chr&gt;, height &lt;int&gt;, weight &lt;int&gt;,
+#   pre_draft_ranking &lt;int&gt;, pre_draft_position_ranking &lt;int&gt;,
+#   pre_draft_grade &lt;int&gt;, hometown_info_city &lt;chr&gt;, hometown_info_state &lt;chr&gt;,
+#   hometown_info_country &lt;chr&gt;, hometown_info_latitude &lt;chr&gt;,
+#   hometown_info_longitude &lt;chr&gt;, hometown_info_county_fips &lt;chr&gt;</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>receiving <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"nfl_qb_receiving_20102024.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tightends <span class="ot">&lt;-</span> receiving <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pos<span class="sc">==</span><span class="st">"TE"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>toptenends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>yds)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>seventhroundte <span class="ot">&lt;-</span> picks <span class="sc">|&gt;</span> </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(round<span class="sc">==</span><span class="st">"7"</span>, position<span class="sc">==</span><span class="st">"Tight End"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>seventhrounderends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(player<span class="sc">==</span><span class="st">"Ben Koyack"</span> <span class="sc">|</span> player<span class="sc">==</span><span class="st">"Geoff Swaim"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Rory Anderson"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Gerald Christian"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Beau Sandland"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Mason Schreck"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Ryan Izzo"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Isaac Nauta"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Tommy Sweeney"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Alize Mack"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Caleb Wilson"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Stephen Sullivan"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Nick Muse"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Zack Kuntz"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Brayden Willis"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Jaheim Bell"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Devin Culp"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>joinedtightends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> <span class="fu">filter</span>(season <span class="sc">&gt;=</span> <span class="dv">2016</span>) <span class="sc">|&gt;</span> <span class="fu">left_join</span>(picks, <span class="at">by=</span><span class="fu">join_by</span>(player <span class="sc">==</span> name)) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(pick) <span class="sc">==</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>draftedte <span class="ot">&lt;-</span> joinedtightends <span class="sc">|&gt;</span> </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(player, round, overall) <span class="sc">|&gt;</span> </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">games =</span> <span class="fu">sum</span>(g),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">games_started =</span> <span class="fu">sum</span>(gs),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">receptions =</span> <span class="fu">sum</span>(rec),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">yards =</span> <span class="fu">sum</span>(yds),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">touchdowns =</span> <span class="fu">sum</span>(td),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>topseventhtes <span class="ot">&lt;-</span> draftedte <span class="sc">|&gt;</span> </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(round <span class="sc">==</span> <span class="st">"7"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>yards)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>rounds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Round 1"</span><span class="ot">=</span> <span class="dv">26336</span>, <span class="st">"Round 2"</span><span class="ot">=</span> <span class="dv">28106</span>, <span class="st">"Round 3"</span><span class="ot">=</span> <span class="dv">26804</span>, <span class="st">"Round 4"</span> <span class="ot">=</span> <span class="dv">26913</span>, <span class="st">"Round 5"</span> <span class="ot">=</span> <span class="dv">20489</span>, <span class="st">"Round 6"</span> <span class="ot">=</span> <span class="dv">7453</span>, <span class="st">"Round 7"</span> <span class="ot">=</span> <span class="dv">1793</span>) </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a> <span class="fu">waffle</span>(rounds<span class="sc">/</span><span class="dv">500</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="dv">10</span>,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#000033"</span>, <span class="st">"#000099"</span>, <span class="st">"#0000cc"</span>, <span class="st">"#0000ff"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#9999ff"</span>, <span class="st">"#E41C38"</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">+</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"1 square = 500 receiving yards"</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>     <span class="at">title=</span><span class="st">"Fidone can become an outlier in the right offensive opportunity"</span>,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Each square represents 500 career receiving yards among tight ends"</span>,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Football Reference | Graphic by Ben Anderson"</span>) <span class="sc">+</span> </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Obviously as expected, seventh-round draft choices do not have nearly as many yards as the players that were drafted with higher expectations in the earlier rounds. Based on the chart, there is not a significant drop-off until you get into the round six territory. Is it possible for the former high school All-American to tap into his potential in the right situation and exceed expectations? There have been crazier stories in sports when players receive the chance.</p>
+<p>With 16 total tight ends getting drafted in the 2025 NFL draft, there is a small likelihood that each of those players will turn out to be successful. A successful seventh-round pick should be looked at as someone who has a longer career in terms of games played. Take a look at a comparison of the top seventh-round tight ends in terms of games played.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>topseventhtes, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(player, games), <span class="at">weight=</span>games, <span class="at">fill=</span>games)) <span class="sc">+</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Seventh-Round Tight Ends"</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Number of Career Games Played"</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Seventh round tight ends over the years"</span>, </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Can Thomas Fidone II Separate from the Field?"</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Football Reference | By Ben Anderson"</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">13</span>), </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The top person on this chart is the former 246th pick in the 2015 draft by the Dallas Cowboys, Geoff Swaim. Swaim played in eight games for Cleveland last year before he was placed on the injured reserve with a concussion, ending his season.</p>
+<p>Swaim’s 10 years of experience is a strong ceiling for a career if Fidone’s health can hold up. What are other potential situations for Fidone that are not horrific? Here are the career statistics of the other tight ends that heard their name called in the seventh round.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>topseventhtes <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>round, <span class="sc">-</span>games_started, <span class="sc">-</span>games) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(yards)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">player =</span> <span class="st">"Player"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">overall =</span> <span class="st">"Pick Selected"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">receptions =</span> <span class="st">"Receptions"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">yards =</span> <span class="st">"Yards"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">touchdowns =</span> <span class="st">"Touchdowns"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How likely is Fidone to get a second contract?"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Looking at how seventh-round tight ends made their mark in the NFL"</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"left"</span>, <span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"**By:** Ben Anderson  |  **Source:** Football Reference"</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">3</span>)),</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_color</span>(</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(yards),</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> scales<span class="sc">::</span><span class="fu">col_numeric</span>(</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">palette =</span> <span class="fu">c</span>(</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"white"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#094d8a"</span>),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">domain =</span> <span class="cn">NULL</span>) </span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_color</span>(</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(receptions),</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> scales<span class="sc">::</span><span class="fu">col_numeric</span>(</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">palette =</span> <span class="fu">c</span>(</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">"white"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#094d8a"</span>),</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">domain =</span> <span class="cn">NULL</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="szbdqiswyk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#szbdqiswyk table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#szbdqiswyk thead, #szbdqiswyk tbody, #szbdqiswyk tfoot, #szbdqiswyk tr, #szbdqiswyk td, #szbdqiswyk th {
+  border-style: none;
+}
+
+#szbdqiswyk p {
+  margin: 0;
+  padding: 0;
+}
+
+#szbdqiswyk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#szbdqiswyk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#szbdqiswyk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#szbdqiswyk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#szbdqiswyk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#szbdqiswyk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#szbdqiswyk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#szbdqiswyk .gt_column_spanner {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#szbdqiswyk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#szbdqiswyk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#szbdqiswyk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#szbdqiswyk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#szbdqiswyk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#szbdqiswyk .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: none;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#szbdqiswyk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#szbdqiswyk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#szbdqiswyk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#szbdqiswyk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#szbdqiswyk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#szbdqiswyk .gt_first_summary_row {
+  border-top-style: none;
+  border-top-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#szbdqiswyk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#szbdqiswyk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: none;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: none;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#szbdqiswyk .gt_table_body {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#szbdqiswyk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#szbdqiswyk .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#szbdqiswyk .gt_left {
+  text-align: left;
+}
+
+#szbdqiswyk .gt_center {
+  text-align: center;
+}
+
+#szbdqiswyk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#szbdqiswyk .gt_font_normal {
+  font-weight: normal;
+}
+
+#szbdqiswyk .gt_font_bold {
+  font-weight: bold;
+}
+
+#szbdqiswyk .gt_font_italic {
+  font-style: italic;
+}
+
+#szbdqiswyk .gt_super {
+  font-size: 65%;
+}
+
+#szbdqiswyk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#szbdqiswyk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#szbdqiswyk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#szbdqiswyk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#szbdqiswyk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#szbdqiswyk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#szbdqiswyk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#szbdqiswyk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#szbdqiswyk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="5" class="gt_heading gt_title gt_font_normal" style="text-align: left; color: #000000; font-weight: bold;">How likely is Fidone to get a second contract?</th>
+</tr>
+<tr class="odd gt_heading">
+<th colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="text-align: left; color: #000000; font-size: 14;">Looking at how seventh-round tight ends made their mark in the NFL</th>
+</tr>
+<tr class="header gt_col_headings">
+<th id="player" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold" scope="col">Player</th>
+<th id="overall" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold" scope="col">Pick Selected</th>
+<th id="receptions" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold" scope="col">Receptions</th>
+<th id="yards" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold" scope="col">Yards</th>
+<th id="touchdowns" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold" scope="col">Touchdowns</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="player">Geoff Swaim</td>
+<td class="gt_row gt_right" headers="overall">246</td>
+<td class="gt_row gt_right" headers="receptions" style="background-color: #094D8A; color: #FFFFFF">101</td>
+<td class="gt_row gt_right" headers="yards" style="background-color: #094D8A; color: #FFFFFF">770</td>
+<td class="gt_row gt_right" headers="touchdowns">5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="player">Ryan Izzo</td>
+<td class="gt_row gt_right gt_striped" headers="overall">250</td>
+<td class="gt_row gt_right gt_striped" headers="receptions" style="background-color: #C5DEFF; color: #000000">19</td>
+<td class="gt_row gt_right gt_striped" headers="yards" style="background-color: #72B8FF; color: #000000">313</td>
+<td class="gt_row gt_right gt_striped" headers="touchdowns">1</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="player">Ben Koyack</td>
+<td class="gt_row gt_right" headers="overall">229</td>
+<td class="gt_row gt_right" headers="receptions" style="background-color: #B1D3FF; color: #000000">25</td>
+<td class="gt_row gt_right" headers="yards" style="background-color: #A9CFFF; color: #000000">208</td>
+<td class="gt_row gt_right" headers="touchdowns">1</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="player">Stephen Sullivan</td>
+<td class="gt_row gt_right gt_striped" headers="overall">251</td>
+<td class="gt_row gt_right gt_striped" headers="receptions" style="background-color: #D5E6FF; color: #000000">14</td>
+<td class="gt_row gt_right gt_striped" headers="yards" style="background-color: #B9D8FF; color: #000000">171</td>
+<td class="gt_row gt_right gt_striped" headers="touchdowns">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="player">Tommy Sweeney</td>
+<td class="gt_row gt_right" headers="overall">228</td>
+<td class="gt_row gt_right" headers="receptions" style="background-color: #C8DFFF; color: #000000">18</td>
+<td class="gt_row gt_right" headers="yards" style="background-color: #BCD9FF; color: #000000">165</td>
+<td class="gt_row gt_right" headers="touchdowns">1</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="player">Devin Culp</td>
+<td class="gt_row gt_right gt_striped" headers="overall">246</td>
+<td class="gt_row gt_right gt_striped" headers="receptions" style="background-color: #F0F6FF; color: #000000">5</td>
+<td class="gt_row gt_right gt_striped" headers="yards" style="background-color: #DCEBFF; color: #000000">88</td>
+<td class="gt_row gt_right gt_striped" headers="touchdowns">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="player">Nick Muse</td>
+<td class="gt_row gt_right" headers="overall">227</td>
+<td class="gt_row gt_right" headers="receptions" style="background-color: #FCFDFF; color: #000000">1</td>
+<td class="gt_row gt_right" headers="yards" style="background-color: #F6FAFF; color: #000000">22</td>
+<td class="gt_row gt_right" headers="touchdowns">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="player">Jaheim Bell</td>
+<td class="gt_row gt_right gt_striped" headers="overall">231</td>
+<td class="gt_row gt_right gt_striped" headers="receptions" style="background-color: #F9FBFF; color: #000000">2</td>
+<td class="gt_row gt_right gt_striped" headers="yards" style="background-color: #F7FAFF; color: #000000">20</td>
+<td class="gt_row gt_right gt_striped" headers="touchdowns">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="player">Isaac Nauta</td>
+<td class="gt_row gt_right" headers="overall">224</td>
+<td class="gt_row gt_right" headers="receptions" style="background-color: #F6FAFF; color: #000000">3</td>
+<td class="gt_row gt_right" headers="yards" style="background-color: #F9FBFF; color: #000000">16</td>
+<td class="gt_row gt_right" headers="touchdowns">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="player">Gerald Christian</td>
+<td class="gt_row gt_right gt_striped" headers="overall">256</td>
+<td class="gt_row gt_right gt_striped" headers="receptions" style="background-color: #FCFDFF; color: #000000">1</td>
+<td class="gt_row gt_right gt_striped" headers="yards" style="background-color: #FAFCFF; color: #000000">14</td>
+<td class="gt_row gt_right gt_striped" headers="touchdowns">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="player">Mason Schreck</td>
+<td class="gt_row gt_right" headers="overall">251</td>
+<td class="gt_row gt_right" headers="receptions" style="background-color: #F9FBFF; color: #000000">2</td>
+<td class="gt_row gt_right" headers="yards" style="background-color: #FDFEFF; color: #000000">6</td>
+<td class="gt_row gt_right" headers="touchdowns">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="player">Brayden Willis</td>
+<td class="gt_row gt_right gt_striped" headers="overall">247</td>
+<td class="gt_row gt_right gt_striped" headers="receptions" style="background-color: #FFFFFF; color: #000000">0</td>
+<td class="gt_row gt_right gt_striped" headers="yards" style="background-color: #FFFFFF; color: #000000">0</td>
+<td class="gt_row gt_right gt_striped" headers="touchdowns">0</td>
+</tr>
+</tbody><tfoot class="gt_sourcenotes">
+<tr class="odd">
+<td colspan="5" class="gt_sourcenote"><strong>By:</strong> Ben Anderson | <strong>Source:</strong> Football Reference</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<p>There is another chart with Swaim leading the way by a large margin. With only five career touchdowns while playing for five different teams, he has made a solid career for himself over time.</p>
+<p>Swaim reportedly has $14,515,726 in career earnings. With the next closest person totaling only 41 career games, his longevity should not be overlooked.</p>
+<p>Would Thomas Fidone II be content with a 14 million-dollar career over ten years in the NFL? It would be a much better option compared to the other players that have been in his situation.</p>
 
 
 
