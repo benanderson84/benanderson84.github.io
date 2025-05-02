@@ -212,78 +212,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>picks <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(picks15, picks16, picks17, picks18, picks19, picks20, picks21, picks22, picks23, picks24)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>picks <span class="sc">|&gt;</span> </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">==</span> <span class="st">"Tight End"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 140 × 23
-   college_athlete_id nfl_athlete_id college_id college_team  college_conference
-                &lt;int&gt;          &lt;int&gt;      &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;             
- 1             530747          46858        135 Minnesota     Big Ten           
- 2             501147          46872       2390 Miami         ACC               
- 3             518366          46885        164 Rutgers       Big Ten           
- 4             514175          46913        194 Ohio State    Big Ten           
- 5             501882          47000        201 Oklahoma      Big 12            
- 6             499085          46938         79 Southern Ill… MVFC              
- 7             511843          47234          2 Auburn        SEC               
- 8             535598          47046        213 Penn State    Big Ten           
- 9            2574591          46992         48 Delaware      CAA               
-10            2508079          47081       2287 Illinois Sta… MVFC              
-# ℹ 130 more rows
-# ℹ 18 more variables: nfl_team &lt;chr&gt;, year &lt;int&gt;, overall &lt;int&gt;, round &lt;int&gt;,
-#   pick &lt;int&gt;, name &lt;chr&gt;, position &lt;chr&gt;, height &lt;int&gt;, weight &lt;int&gt;,
-#   pre_draft_ranking &lt;int&gt;, pre_draft_position_ranking &lt;int&gt;,
-#   pre_draft_grade &lt;int&gt;, hometown_info_city &lt;chr&gt;, hometown_info_state &lt;chr&gt;,
-#   hometown_info_country &lt;chr&gt;, hometown_info_latitude &lt;chr&gt;,
-#   hometown_info_longitude &lt;chr&gt;, hometown_info_county_fips &lt;chr&gt;</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>receiving <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"nfl_qb_receiving_20102024.csv"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tightends <span class="ot">&lt;-</span> receiving <span class="sc">|&gt;</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pos<span class="sc">==</span><span class="st">"TE"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>toptenends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>yds)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>seventhroundte <span class="ot">&lt;-</span> picks <span class="sc">|&gt;</span> </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(round<span class="sc">==</span><span class="st">"7"</span>, position<span class="sc">==</span><span class="st">"Tight End"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>seventhrounderends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(player<span class="sc">==</span><span class="st">"Ben Koyack"</span> <span class="sc">|</span> player<span class="sc">==</span><span class="st">"Geoff Swaim"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Rory Anderson"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Gerald Christian"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Beau Sandland"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Mason Schreck"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Ryan Izzo"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Isaac Nauta"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Tommy Sweeney"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Alize Mack"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Caleb Wilson"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Stephen Sullivan"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Nick Muse"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Zack Kuntz"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Brayden Willis"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Jaheim Bell"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Devin Culp"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>joinedtightends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> <span class="fu">filter</span>(season <span class="sc">&gt;=</span> <span class="dv">2016</span>) <span class="sc">|&gt;</span> <span class="fu">left_join</span>(picks, <span class="at">by=</span><span class="fu">join_by</span>(player <span class="sc">==</span> name)) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(pick) <span class="sc">==</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>draftedte <span class="ot">&lt;-</span> joinedtightends <span class="sc">|&gt;</span> </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(player, round, overall) <span class="sc">|&gt;</span> </span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">games =</span> <span class="fu">sum</span>(g),</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">games_started =</span> <span class="fu">sum</span>(gs),</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">receptions =</span> <span class="fu">sum</span>(rec),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">yards =</span> <span class="fu">sum</span>(yds),</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">touchdowns =</span> <span class="fu">sum</span>(td),</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>topseventhtes <span class="ot">&lt;-</span> draftedte <span class="sc">|&gt;</span> </span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(round <span class="sc">==</span> <span class="st">"7"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>yards)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>rounds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Round 1"</span><span class="ot">=</span> <span class="dv">26336</span>, <span class="st">"Round 2"</span><span class="ot">=</span> <span class="dv">28106</span>, <span class="st">"Round 3"</span><span class="ot">=</span> <span class="dv">26804</span>, <span class="st">"Round 4"</span> <span class="ot">=</span> <span class="dv">26913</span>, <span class="st">"Round 5"</span> <span class="ot">=</span> <span class="dv">20489</span>, <span class="st">"Round 6"</span> <span class="ot">=</span> <span class="dv">7453</span>, <span class="st">"Round 7"</span> <span class="ot">=</span> <span class="dv">1793</span>) </span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a> <span class="fu">waffle</span>(rounds<span class="sc">/</span><span class="dv">500</span>,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="dv">10</span>,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#000033"</span>, <span class="st">"#000099"</span>, <span class="st">"#0000cc"</span>, <span class="st">"#0000ff"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#9999ff"</span>, <span class="st">"#E41C38"</span>)</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">+</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"1 square = 500 receiving yards"</span>,</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>     <span class="at">title=</span><span class="st">"Fidone can become an outlier in the right offensive opportunity"</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Each square represents 500 career receiving yards among tight ends"</span>,</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Football Reference | Graphic by Ben Anderson"</span>) <span class="sc">+</span> </span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>receiving <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"nfl_qb_receiving_20102024.csv"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>tightends <span class="ot">&lt;-</span> receiving <span class="sc">|&gt;</span> </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pos<span class="sc">==</span><span class="st">"TE"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>toptenends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>yds)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>seventhroundte <span class="ot">&lt;-</span> picks <span class="sc">|&gt;</span> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(round<span class="sc">==</span><span class="st">"7"</span>, position<span class="sc">==</span><span class="st">"Tight End"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>seventhrounderends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(player<span class="sc">==</span><span class="st">"Ben Koyack"</span> <span class="sc">|</span> player<span class="sc">==</span><span class="st">"Geoff Swaim"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Rory Anderson"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Gerald Christian"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Beau Sandland"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Mason Schreck"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Ryan Izzo"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Isaac Nauta"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Tommy Sweeney"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Alize Mack"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Caleb Wilson"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Stephen Sullivan"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Nick Muse"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Zack Kuntz"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Brayden Willis"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Jaheim Bell"</span> <span class="sc">|</span>player<span class="sc">==</span><span class="st">"Devin Culp"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>joinedtightends <span class="ot">&lt;-</span> tightends <span class="sc">|&gt;</span> <span class="fu">filter</span>(season <span class="sc">&gt;=</span> <span class="dv">2016</span>) <span class="sc">|&gt;</span> <span class="fu">left_join</span>(picks, <span class="at">by=</span><span class="fu">join_by</span>(player <span class="sc">==</span> name)) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(pick) <span class="sc">==</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>draftedte <span class="ot">&lt;-</span> joinedtightends <span class="sc">|&gt;</span> </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(player, round, overall) <span class="sc">|&gt;</span> </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">games =</span> <span class="fu">sum</span>(g),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">games_started =</span> <span class="fu">sum</span>(gs),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">receptions =</span> <span class="fu">sum</span>(rec),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">yards =</span> <span class="fu">sum</span>(yds),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">touchdowns =</span> <span class="fu">sum</span>(td),</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>topseventhtes <span class="ot">&lt;-</span> draftedte <span class="sc">|&gt;</span> </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(round <span class="sc">==</span> <span class="st">"7"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>yards)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>rounds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Round 1"</span><span class="ot">=</span> <span class="dv">26336</span>, <span class="st">"Round 2"</span><span class="ot">=</span> <span class="dv">28106</span>, <span class="st">"Round 3"</span><span class="ot">=</span> <span class="dv">26804</span>, <span class="st">"Round 4"</span> <span class="ot">=</span> <span class="dv">26913</span>, <span class="st">"Round 5"</span> <span class="ot">=</span> <span class="dv">20489</span>, <span class="st">"Round 6"</span> <span class="ot">=</span> <span class="dv">7453</span>, <span class="st">"Round 7"</span> <span class="ot">=</span> <span class="dv">1793</span>) </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a> <span class="fu">waffle</span>(rounds<span class="sc">/</span><span class="dv">500</span>,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        <span class="at">rows =</span> <span class="dv">10</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#000033"</span>, <span class="st">"#000099"</span>, <span class="st">"#0000cc"</span>, <span class="st">"#0000ff"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#9999ff"</span>, <span class="st">"#E41C38"</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a> ) <span class="sc">+</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"1 square = 500 receiving yards"</span>,</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>     <span class="at">title=</span><span class="st">"Fidone can become an outlier in the right offensive opportunity"</span>,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Each square represents 500 career receiving yards among tight ends"</span>,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Football Reference | Graphic by Ben Anderson"</span>) <span class="sc">+</span> </span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -298,24 +271,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>topseventhtes, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(player, games), <span class="at">weight=</span>games, <span class="at">fill=</span>games)) <span class="sc">+</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Seventh-Round Tight Ends"</span>, </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Number of Career Games Played"</span>, </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Seventh round tight ends over the years"</span>, </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Can Thomas Fidone II Separate from the Field?"</span>, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Football Reference | By Ben Anderson"</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">13</span>), </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data=</span>topseventhtes, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(player, games), <span class="at">weight=</span>games, <span class="at">fill=</span>games)) <span class="sc">+</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Seventh-Round Tight Ends"</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">"Number of Career Games Played"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Seventh round tight ends over the years"</span>, </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">"Can Thomas Fidone II Separate from the Field?"</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: Football Reference | By Ben Anderson"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">13</span>), </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -330,73 +303,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>topseventhtes <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>round, <span class="sc">-</span>games_started, <span class="sc">-</span>games) <span class="sc">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(yards)) <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">player =</span> <span class="st">"Player"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">overall =</span> <span class="st">"Pick Selected"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">receptions =</span> <span class="st">"Receptions"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">yards =</span> <span class="st">"Yards"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">touchdowns =</span> <span class="st">"Touchdowns"</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How likely is Fidone to get a second contract?"</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Looking at how seventh-round tight ends made their mark in the NFL"</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"left"</span>, <span class="at">size=</span><span class="dv">14</span>),</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"**By:** Ben Anderson  |  **Source:** Football Reference"</span>)</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">3</span>)),</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>     )</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_color</span>(</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(yards),</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> scales<span class="sc">::</span><span class="fu">col_numeric</span>(</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">palette =</span> <span class="fu">c</span>(</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"white"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#094d8a"</span>),</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">domain =</span> <span class="cn">NULL</span>) </span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_color</span>(</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(receptions),</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> scales<span class="sc">::</span><span class="fu">col_numeric</span>(</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">palette =</span> <span class="fu">c</span>(</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">"white"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#094d8a"</span>),</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">domain =</span> <span class="cn">NULL</span>)</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>topseventhtes <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>round, <span class="sc">-</span>games_started, <span class="sc">-</span>games) <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(yards)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">player =</span> <span class="st">"Player"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">overall =</span> <span class="st">"Pick Selected"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">receptions =</span> <span class="st">"Receptions"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">yards =</span> <span class="st">"Yards"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">touchdowns =</span> <span class="st">"Touchdowns"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How likely is Fidone to get a second contract?"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Looking at how seventh-round tight ends made their mark in the NFL"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"left"</span>, <span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"**By:** Ben Anderson  |  **Source:** Football Reference"</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">3</span>)),</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_color</span>(</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(yards),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> scales<span class="sc">::</span><span class="fu">col_numeric</span>(</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">palette =</span> <span class="fu">c</span>(</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"white"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#094d8a"</span>),</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">domain =</span> <span class="cn">NULL</span>) </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_color</span>(</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(receptions),</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> scales<span class="sc">::</span><span class="fu">col_numeric</span>(</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">palette =</span> <span class="fu">c</span>(</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">"white"</span>, <span class="st">"#37a9ff"</span>, <span class="st">"#094d8a"</span>),</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">domain =</span> <span class="cn">NULL</span>)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="szbdqiswyk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#szbdqiswyk table {
+<div id="jdmoniivsd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jdmoniivsd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#szbdqiswyk thead, #szbdqiswyk tbody, #szbdqiswyk tfoot, #szbdqiswyk tr, #szbdqiswyk td, #szbdqiswyk th {
+#jdmoniivsd thead, #jdmoniivsd tbody, #jdmoniivsd tfoot, #jdmoniivsd tr, #jdmoniivsd td, #jdmoniivsd th {
   border-style: none;
 }
 
-#szbdqiswyk p {
+#jdmoniivsd p {
   margin: 0;
   padding: 0;
 }
 
-#szbdqiswyk .gt_table {
+#jdmoniivsd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -422,12 +395,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_caption {
+#jdmoniivsd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#szbdqiswyk .gt_title {
+#jdmoniivsd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -439,7 +412,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#szbdqiswyk .gt_subtitle {
+#jdmoniivsd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -451,7 +424,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#szbdqiswyk .gt_heading {
+#jdmoniivsd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -463,13 +436,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_bottom_border {
+#jdmoniivsd .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_col_headings {
+#jdmoniivsd .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -484,7 +457,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_col_heading {
+#jdmoniivsd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -504,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#szbdqiswyk .gt_column_spanner_outer {
+#jdmoniivsd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -516,15 +489,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#szbdqiswyk .gt_column_spanner_outer:first-child {
+#jdmoniivsd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#szbdqiswyk .gt_column_spanner_outer:last-child {
+#jdmoniivsd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#szbdqiswyk .gt_column_spanner {
+#jdmoniivsd .gt_column_spanner {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -536,11 +509,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#szbdqiswyk .gt_spanner_row {
+#jdmoniivsd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#szbdqiswyk .gt_group_heading {
+#jdmoniivsd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -566,7 +539,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#szbdqiswyk .gt_empty_group_heading {
+#jdmoniivsd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -581,15 +554,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#szbdqiswyk .gt_from_md > :first-child {
+#jdmoniivsd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#szbdqiswyk .gt_from_md > :last-child {
+#jdmoniivsd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#szbdqiswyk .gt_row {
+#jdmoniivsd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -608,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#szbdqiswyk .gt_stub {
+#jdmoniivsd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -621,7 +594,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#szbdqiswyk .gt_stub_row_group {
+#jdmoniivsd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -635,15 +608,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#szbdqiswyk .gt_row_group_first td {
+#jdmoniivsd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#szbdqiswyk .gt_row_group_first th {
+#jdmoniivsd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#szbdqiswyk .gt_summary_row {
+#jdmoniivsd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -653,16 +626,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#szbdqiswyk .gt_first_summary_row {
+#jdmoniivsd .gt_first_summary_row {
   border-top-style: none;
   border-top-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_first_summary_row.thick {
+#jdmoniivsd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#szbdqiswyk .gt_last_summary_row {
+#jdmoniivsd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -672,7 +645,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_grand_summary_row {
+#jdmoniivsd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -682,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#szbdqiswyk .gt_first_grand_summary_row {
+#jdmoniivsd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -692,7 +665,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_last_grand_summary_row_top {
+#jdmoniivsd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -702,11 +675,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_striped {
+#jdmoniivsd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#szbdqiswyk .gt_table_body {
+#jdmoniivsd .gt_table_body {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -715,7 +688,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_footnotes {
+#jdmoniivsd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -729,7 +702,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_footnote {
+#jdmoniivsd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -738,7 +711,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#szbdqiswyk .gt_sourcenotes {
+#jdmoniivsd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -752,7 +725,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#szbdqiswyk .gt_sourcenote {
+#jdmoniivsd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -760,72 +733,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#szbdqiswyk .gt_left {
+#jdmoniivsd .gt_left {
   text-align: left;
 }
 
-#szbdqiswyk .gt_center {
+#jdmoniivsd .gt_center {
   text-align: center;
 }
 
-#szbdqiswyk .gt_right {
+#jdmoniivsd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#szbdqiswyk .gt_font_normal {
+#jdmoniivsd .gt_font_normal {
   font-weight: normal;
 }
 
-#szbdqiswyk .gt_font_bold {
+#jdmoniivsd .gt_font_bold {
   font-weight: bold;
 }
 
-#szbdqiswyk .gt_font_italic {
+#jdmoniivsd .gt_font_italic {
   font-style: italic;
 }
 
-#szbdqiswyk .gt_super {
+#jdmoniivsd .gt_super {
   font-size: 65%;
 }
 
-#szbdqiswyk .gt_footnote_marks {
+#jdmoniivsd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#szbdqiswyk .gt_asterisk {
+#jdmoniivsd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#szbdqiswyk .gt_indent_1 {
+#jdmoniivsd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#szbdqiswyk .gt_indent_2 {
+#jdmoniivsd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#szbdqiswyk .gt_indent_3 {
+#jdmoniivsd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#szbdqiswyk .gt_indent_4 {
+#jdmoniivsd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#szbdqiswyk .gt_indent_5 {
+#jdmoniivsd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#szbdqiswyk .katex-display {
+#jdmoniivsd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#szbdqiswyk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jdmoniivsd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
